@@ -1,6 +1,6 @@
 # In2Batch
 Second Version of into-batch
-Windows Batch code that lets you convert any program into a script you can put in your batch script
+Windows Batch code that lets you convert any program or file into a script you can put in your batch script
 
 basic syntax: In2batch.bat filename.txt
 
