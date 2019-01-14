@@ -124,7 +124,7 @@ echo del /f /q "temp%num%.txt" >>%output%
 (echo Rem Start-%num%)>>%output%
 "%temp%\AddEcho.exe" < temp.txt >> %output%
 echo :%num% >> %output%
-echo goto :eof>> %output%
+echo goto :end%num%>> %output%
 
 (echo :OutCertificate%num%)>>%output%
 echo @set "_out=">> %output%
@@ -135,6 +135,7 @@ echo   @if "%%%%~G"=="echo -----END CERTIFICATE-----" goto :eof>>%output%
 echo )>> %output%
 echo @endlocal >>%output%
 echo @goto :eof>> %output%
+echo :end%num% >>%output%
 
 
 echo.
