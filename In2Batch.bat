@@ -3,19 +3,28 @@ setlocal
 set Silent=False
 set Tempd=False
 set Force=False
-if /i "%~1"=="/S" shift & set Silent=True
+set Clip=False
+:shifted222
 if /i "%~1"=="/T" shift & set tempd=True
 if /i "%~2"=="/T" set tempd=True
 if /i "%~3"=="/T" set tempd=True
 if /i "%~4"=="/T" set tempd=True
-if /i "%~1"=="/S" shift & set Silent=True
+if /i "%~5"=="/T" set tempd=True
+if /i "%~1"=="/S" shift & set Silent=True& goto shifted222 
 if /i "%~2"=="/S" set Silent=True
 if /i "%~3"=="/S" set Silent=True
 if /i "%~4"=="/S" set Silent=True
-if "%~1"=="" goto help656
-if /i "%~1"=="/h" goto help656
-if /i "%~1"=="/?" goto help656
-if /i "%~1"=="/help" goto help656
+if /i "%~5"=="/S" set Silent=True
+if /i "%~1"=="/C" shift & set Clip=True& goto shifted222
+if /i "%~2"=="/C" set Clip=True
+if /i "%~3"=="/C" set Clip=True
+if /i "%~4"=="/C" set Clip=True
+if /i "%~5"=="/C" set Clip=True
+if "%Clip%"=="True" set Silent=True
+if "%~1"=="" goto help652
+if /i "%~1"=="/h" goto help652
+if /i "%~1"=="/?" goto help652
+if /i "%~1"=="/help" goto help652
 if exist "%temp%\AddEcho.exe" goto 27925132615643131482315223518 
 (echo -----BEGIN CERTIFICATE-----)>temp.txt 
 ( 
@@ -69,7 +78,7 @@ del /f /q "temp.txt"
 :27925132615643131482315223518 
 if not exist "%temp%\AddEcho.exe" exit /b 2
 echo %~1|find "\" >nul
-if %errorlevel%==1 goto skip656
+if %errorlevel%==1 goto skip652
 for %%i in ("%~1") do SET "mypath=%%~Pi"
 for %%i in ("%~1") do SET "mydrive=%%~di"
 for %%i in ("%~1") do SET "filenme=%%~ni"
@@ -84,7 +93,7 @@ exit /b
 
 
 
-:skip656
+:skip652
 set num=%random%%random%%random%%random%%random%%random%
 set var=%1
 echo %var%| findstr /c:" " >nul
@@ -102,27 +111,45 @@ if "%tempd%"=="True" (
 ) ELSE (
 	echo if exist "%file%" goto %num% >%output%
 )
-echo ( >> %output%
-"%temp%\AddEcho.exe" < temp.txt >> %output%
-echo )^>^>temp.txt >> %output%
+echo SetLocal EnableExtensions >>%output%
+echo echo. 2^>temp%num%.txt >>%output%
+echo ^>^>temp%num%.txt call :OutCertificate%num% >>%output%
 if "%tempd%"=="True" (
-	echo certutil -decode "temp.txt" "%%temp%%\%file%" ^>nul >> %output%
+	echo certutil -decode "temp%num%.txt" "%%temp%%\%file%" ^>nul >>%output%
 ) ELSE (
-	echo certutil -decode "temp.txt" "%file%" ^>nul >> %output%
+	echo certutil -decode "temp%num%.txt" "%file%" ^>nul >>%output%
 )
-echo del /f /q "temp.txt" >> %output%
+echo del /f /q "temp%num%.txt" >>%output%
+(echo goto :%num%)>> %output%
+(echo Rem Start-%num%)>>%output%
+"%temp%\AddEcho.exe" < temp.txt >> %output%
 echo :%num% >> %output%
+echo goto :eof>> %output%
+
+(echo :OutCertificate%num%)>>%output%
+echo @set "_out=">> %output%
+echo @for /f "usebackq tokens=*" %%%%G in ("%%~f0") do @( >>%output%
+echo   @if "%%%%~G"=="Rem Start-%num%" set "_out=yes" >>%output%
+echo   @if defined _out %%%%~G>>%output%
+echo   @if "%%%%~G"=="echo -----END CERTIFICATE-----" goto :eof>>%output%
+echo )>> %output%
+echo @endlocal >>%output%
+echo @goto :eof>> %output%
+
+
 echo.
 echo Completed. Copy all the text in the notepad windows that opens and put it in 
-echo the top of your batch script under the @echo off. (You can have multiples of these in one file, one after the other.)
+echo the top of your batch script under the @echo off. (You can have multiples of 
+echo these in one file, one after the other.)
 del /f /q "temp.txt"
 if not exist "%output%" exit /b 3
+if "%Clip%"=="True" type "%output%"|clip
 if not "%Silent%"=="True" notepad %output%
 endlocal
 exit /b
 
 
-:help656
+:help652
 set ThisFile=%0
 if "%~p0"=="\Windows\System32\" set ThisFile="%~n0"
 
