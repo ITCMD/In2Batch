@@ -87,7 +87,7 @@ set filenme=%filenme%%ext%
 pushd "%mydrive%%mypath%"
 echo %filenme%|find " " >nul
 if %errorlevel%==0 set filenme="%filenme%"
-call :skip %filenme% %2 %3 %4
+call :skip652 %filenme% %2 %3 %4
 endlocal
 exit /b
 
