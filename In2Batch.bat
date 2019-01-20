@@ -112,7 +112,7 @@ if "%tempd%"=="True" (
 	echo if exist "%file%" goto %num% >%output%
 )
 echo SetLocal EnableExtensions >>%output%
-echo echo. 2^>temp%num%.txt >>%output%
+echo echo. 2^>temp%num%.txt 1^>nul >>%output%
 echo ^>^>temp%num%.txt call :OutCertificate%num% >>%output%
 if "%tempd%"=="True" (
 	echo certutil -decode "temp%num%.txt" "%%temp%%\%file%" ^>nul >>%output%
