@@ -78,7 +78,7 @@ del /f /q "temp.txt"
 :27925132615643131482315223518 
 if not exist "%temp%\AddEcho.exe" exit /b 2
 echo %~1|find "\" >nul
-if %errorlevel%==1 goto skip652
+if %errorlevel%==1 goto skipme
 for %%i in ("%~1") do SET "mypath=%%~Pi"
 for %%i in ("%~1") do SET "mydrive=%%~di"
 for %%i in ("%~1") do SET "filenme=%%~ni"
@@ -87,13 +87,13 @@ set filenme=%filenme%%ext%
 pushd "%mydrive%%mypath%"
 echo %filenme%|find " " >nul
 if %errorlevel%==0 set filenme="%filenme%"
-call :skip652 %filenme% %2 %3 %4
+call :skipme %filenme% %2 %3 %4
 endlocal
 exit /b
 
 
 
-:skip652
+:skipme
 set num=%random%%random%%random%%random%%random%%random%
 set var=%1
 echo %var%| findstr /c:" " >nul
@@ -123,6 +123,7 @@ echo del /f /q "temp%num%.txt" >>%output%
 (echo goto :%num%)>> %output%
 (echo Rem Start-%num%)>>%output%
 "%temp%\AddEcho.exe" < temp.txt >> %output%
+(echo Rem End-%num%)>>%output%
 echo :%num% >> %output%
 echo goto :end%num%>> %output%
 
@@ -131,7 +132,7 @@ echo @set "_out=">> %output%
 echo @for /f "usebackq tokens=*" %%%%G in ("%%~f0") do @( >>%output%
 echo   @if "%%%%~G"=="Rem Start-%num%" set "_out=yes" >>%output%
 echo   @if defined _out %%%%~G>>%output%
-echo   @if "%%%%~G"=="echo -----END CERTIFICATE-----" goto :eof>>%output%
+echo   @if "%%%%~G"=="Rem End-%num%" goto :eof>>%output%
 echo )>> %output%
 echo @endlocal >>%output%
 echo @goto :eof>> %output%
