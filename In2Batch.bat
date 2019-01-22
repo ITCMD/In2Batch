@@ -167,7 +167,7 @@ echo.
 echo the /S option does not open the file at the end of the conversion, and does not prompt for force.
 echo the /T option makes a script that creates your file in the temp folder. In our example above, it would
 echo          create Itcon.png in the %%temp%% folder. Remember this when using said file later on!
-ehco the /C option copies the output to your clipboard. The output file will still be created, however.
+echo the /C option copies the output to your clipboard. The output file will still be created, however.
 echo.
 echo Please note that this script uses a tool called AddEcho.exe. This lets us process many lines at once for the
 echo          echo process. It was written by TSnake41.
