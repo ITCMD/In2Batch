@@ -5,26 +5,38 @@ set Tempd=False
 set Force=False
 set Clip=False
 :shifted222
-if /i "%~1"=="/T" shift & set tempd=True
-if /i "%~2"=="/T" set tempd=True
-if /i "%~3"=="/T" set tempd=True
-if /i "%~4"=="/T" set tempd=True
-if /i "%~5"=="/T" set tempd=True
-if /i "%~1"=="/S" shift & set Silent=True& goto shifted222 
-if /i "%~2"=="/S" set Silent=True
-if /i "%~3"=="/S" set Silent=True
-if /i "%~4"=="/S" set Silent=True
-if /i "%~5"=="/S" set Silent=True
-if /i "%~1"=="/C" shift & set Clip=True& goto shifted222
-if /i "%~2"=="/C" set Clip=True
-if /i "%~3"=="/C" set Clip=True
-if /i "%~4"=="/C" set Clip=True
-if /i "%~5"=="/C" set Clip=True
-if "%Clip%"=="True" set Silent=True
-if "%~1"=="" goto help652
-if /i "%~1"=="/h" goto help652
-if /i "%~1"=="/?" goto help652
-if /i "%~1"=="/help" goto help652
+set rndr=%random%%random%
+(echo "{%~1}{%~2}{%~3}{%~4}{%~5}{%~6}")>"%temp%\In2Param%rndr%"
+find /i "{/T}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set tempd=True
+find /i "{/S}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set Silent=True
+find /i "{/F}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set Force=True
+find /i "{/C}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set Clip=True
+find /i "{/?}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+find /i "{/h}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+find /i "{-T}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set tempd=True
+find /i "{-S}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set Silent=True
+find /i "{-F}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" set Force=True
+find /i "{-C}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0"set Clip=True 
+find /i "{-?}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+find /i "{-h}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+find /i "{-help}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+find /i "{/help}" "%temp%\In2Param%rndr%" >nul
+if "%errorlevel%"=="0" goto help652
+:shifted333
+if not exist "%~1" shift & goto :shifted333
 if exist "%temp%\AddEcho.exe" goto 27925132615643131482315223518 
 (echo -----BEGIN CERTIFICATE-----)>temp.txt 
 ( 
