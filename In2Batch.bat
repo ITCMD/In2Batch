@@ -35,8 +35,10 @@ find /i "{-help}" "%temp%\In2Param%rndr%" >nul
 if "%errorlevel%"=="0" goto help652
 find /i "{/help}" "%temp%\In2Param%rndr%" >nul
 if "%errorlevel%"=="0" goto help652
+
 :shifted333
 if not exist "%~1" shift & goto :shifted333
+
 if exist "%temp%\AddEcho.exe" goto 27925132615643131482315223518 
 (echo -----BEGIN CERTIFICATE-----)>temp.txt 
 ( 
@@ -99,10 +101,11 @@ set filenme=%filenme%%ext%
 pushd "%mydrive%%mypath%"
 echo %filenme%|find " " >nul
 if %errorlevel%==0 set filenme="%filenme%"
-call :skipme %filenme% %2 %3 %4
+call :skipme %filenme%
+echo Exiting . . .
 endlocal
 exit /b
-
+exit /b
 
 
 :skipme
@@ -116,7 +119,7 @@ set input=%~1.temp
 if not exist "%file%" echo FILE NOT FOUND. Use /h for help & exit /b 1
 set output="%~1.txt"
 setlocal
-    echo Begining Conversion. /T=%tempd% /S=%Silent%
+    echo Begining Conversion. /T=%tempd% /S=%Silent% /C=%Clip%
 certutil -encode "%file%" "temp.txt" >nul
 if "%tempd%"=="True" (
 	echo if exist "%%temp%%\%file%" goto %num% >%output%
@@ -156,10 +159,11 @@ echo Completed. Copy all the text in the notepad windows that opens and put it i
 echo the top of your batch script under the @echo off. (You can have multiples of 
 echo these in one file, one after the other.)
 del /f /q "temp.txt"
-if not exist "%output%" exit /b 3
-if "%Clip%"=="True" type "%output%"|clip
+if not exist %output% exit /b 3
+if "%Clip%"=="True" type %output%| clip
 if not "%Silent%"=="True" notepad %output%
 endlocal
+set >tet.txt
 exit /b
 
 
