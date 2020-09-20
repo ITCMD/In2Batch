@@ -4,6 +4,7 @@ set Silent=False
 set Tempd=False
 set Force=False
 set Clip=False
+if "%~1"=="" goto help652
 :shifted222
 set rndr=%random%%random%
 (echo "{%~1}{%~2}{%~3}{%~4}{%~5}{%~6}")>"%temp%\In2Param%rndr%"
@@ -168,7 +169,7 @@ exit /b
 
 
 :help652
-set ThisFile=%0
+set ThisFile=%~0
 if "%~p0"=="\Windows\System32\" set ThisFile="%~n0"
 
 echo This tool allows you to store any type of file inside your batch code.
@@ -182,7 +183,8 @@ echo          starts, if Icon.png does not exist it will create it!
 echo.
 echo the /S option does not open the file at the end of the conversion, and does not prompt for force.
 echo the /T option makes a script that creates your file in the temp folder. In our example above, it would
-echo          create Itcon.png in the %%temp%% folder. Remember this when using said file later on!
+echo          create Icon.png in the %%temp%% folder. Remember this when using said file later on!
+echo          Also note that files in %%temp%% do not get deleted automatically.
 echo the /C option copies the output to your clipboard. The output file will still be created, however.
 echo.
 echo Please note that this script uses a tool called AddEcho.exe. This lets us process many lines at once for the
@@ -195,10 +197,11 @@ echo           3=Process Failed for unknown reason.
 echo.
 echo This programs github page: https://github.com/ITCMD/Int2Batch
 echo Old Version 1 github page: https://github.com/ITCMD/Into-Batch
-echo Version one does not use AddEcho.exe   It is more stable but MUCH SLOWER.
+echo Version 1 does not use AddEcho.exe It is more stable but MUCH SLOWER and does not support large files.
+echo In certain cercumstances it may be better to use.
 echo.
-echo Questions or problems? Contact us at Support@ITCommand.tech!
-echo (C) 2019 by Lucas Elliott with IT Command www.itcommand.tech
+echo Questions or problems? Contact us at lucas_programming@itcommand.net!
+echo (C) 2019 by Lucas Elliott with IT Command www.itcommand.net
 echo This program is free to use for personal or corperate circumstances, but removal of copyright information is illegal.
 if "%1"=="" (if not "%Silent%"=="True" pause)
 endlocal
