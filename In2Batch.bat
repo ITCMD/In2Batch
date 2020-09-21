@@ -164,7 +164,6 @@ if not exist %output% exit /b 3
 if "%Clip%"=="True" type %output%| clip
 if not "%Silent%"=="True" notepad %output%
 endlocal
-set >tet.txt
 exit /b
 
 
