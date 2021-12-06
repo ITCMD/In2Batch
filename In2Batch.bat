@@ -197,11 +197,11 @@ echo.
 echo This programs github page: https://github.com/ITCMD/Int2Batch
 echo Old Version 1 github page: https://github.com/ITCMD/Into-Batch
 echo Version 1 does not use AddEcho.exe It is more stable but MUCH SLOWER and does not support large files.
-echo In certain cercumstances it may be better to use.
+echo In certain circumstances it may be better to use.
 echo.
 echo Questions or problems? Contact us at lucas_programming@itcommand.net!
 echo (C) 2019 by Lucas Elliott with IT Command www.itcommand.net
-echo This program is free to use for personal or corperate circumstances, but removal of copyright information is illegal.
+echo This program is free to use for personal or corporate circumstances, but removal of copyright information is illegal.
 if "%1"=="" (if not "%Silent%"=="True" pause)
 endlocal
 exit /b
